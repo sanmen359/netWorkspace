@@ -13,7 +13,7 @@ using WebApp.Data;
 using WebApp.Models;
 using WebApp.Services;
 using Newtonsoft.Json.Serialization;
-using Microsoft.AspNetCore.Http;
+using Core.Repository;
 
 namespace WebApp
 {
@@ -57,8 +57,8 @@ namespace WebApp
             services.AddDistributedMemoryCache();
             services.AddDbContext<ApplicationDbContext>(options =>
                 options
-                .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
-                
+                .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), m => m.UseRowNumberForPaging())
+
                 ).AddUnitOfWork<ApplicationDbContext>();
             
         }
@@ -83,8 +83,7 @@ namespace WebApp
             });
             app.UseStaticFiles();
             
-            app.UseIdentity();
-            
+            app.UseIdentity(); 
 
             // Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
             var dbcontext = app.ApplicationServices.GetService<ApplicationDbContext>();

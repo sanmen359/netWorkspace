@@ -19,40 +19,42 @@ namespace Microsoft.AspNetCore.Mvc
         protected IUnitOfWork _Work;
         protected IRepository<TEntity> _Repository;
 
-        // GET api/values/5
+        // GET api/entitys/5
         [HttpGet("{id}")]
         public virtual Task<TEntity> Get(TKey id)
         {
             return _Work.GetRepository<TEntity>().FindAsync(id);
         }
 
-        // POST api/values
         [HttpPost]
-        public virtual ResponseResult<TEntity> PostAndReturn([FromBody]TEntity value)
+        public virtual ResponseResult<TEntity> PostAndReturn([FromBody]TEntity entity)
         {
-            _Work.GetRepository<TEntity>().Insert(value);
+            _Work.GetRepository<TEntity>().Insert(entity);
             _Work.SaveChanges();
-            return ReturnSuccess(value);
+            return ReturnSuccess(entity);
         }
 
-        // POST api/values
+        // POST api/entity
         [HttpPost]
-        public virtual Task Post([FromBody]TEntity value)
+        public virtual Task Post([FromBody]TEntity entity)
         {
-            _Work.GetRepository<TEntity>().Insert(value);
+            if (entity == null)
+            {
+                throw new Exception("对象不能为空！");
+            }
+            _Work.GetRepository<TEntity>().Insert(entity);
             return _Work.SaveChangesAsync();
         }
 
-
-        // PUT api/values/5
+        // PUT api/entity/5
         [HttpPut("{id}")]
-        public virtual Task Put(TKey id, [FromBody]TEntity value)
+        public virtual Task Put(TKey id, [FromBody]TEntity entity)
         {
-            _Work.GetRepository<TEntity>().Update(value);
+            _Work.GetRepository<TEntity>().Update(entity);
             return _Work.SaveChangesAsync();
         }
 
-        // DELETE api/values/5
+        // DELETE api/entity/5
         [HttpDelete("{id}")]
         public virtual Task Delete(TKey id)
         {

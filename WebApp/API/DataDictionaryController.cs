@@ -61,11 +61,14 @@ namespace Web.Api
             return newData.ID;
         }
 
+
+
         [HttpPost]
-        public Task<IPagedList<DataDictionary>> GetItemByParentId([FromBody]QueryModel filter)
+        public Task< IEnumerable<DataDictionary>>  GetItemByParentId([FromBody]QueryModel filter)
         {
-            var parentID =Guid.Parse( filter.Keyword);
-            return _Repository.GetPagedListAsync(m => m.ParentId == parentID, pageIndex: filter.PageIndex, pageSize: filter.PageSize);
+            var parentID = Guid.Parse(filter.Keyword);
+            return _Repository.Query(m => m.ParentId == parentID).OrderBy(m=>m.Order)
+                .ToPagedAsync( filter.PageIndex,filter.PageSize);
         }
 
         [HttpDelete]

@@ -11,6 +11,11 @@
   <PropertyGroup>
     <UserSecretsId>aspnet-WebApp-6f01fd49-6b56-4675-a91b-1d17cb1ff912</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Data\ApplicationDbContext.cs" />
+    <Compile Remove="Models\ApplicationUser.cs" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
@@ -37,6 +42,9 @@
     <ProjectReference Include="..\Core.Modes\Core.Modes.csproj" />
     <ProjectReference Include="..\Core.Repository\Core.Repository.csproj" />
     <ProjectReference Include="..\Microsoft.EntityFrameworkCore.UnitOfWork\Microsoft.EntityFrameworkCore.UnitOfWork.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\" />
   </ItemGroup>
 
 </Project>

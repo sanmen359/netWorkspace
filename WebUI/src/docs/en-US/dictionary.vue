@@ -74,12 +74,12 @@
         border
         style="width: 100%">
         <el-table-column
+          fixed
           prop="code"
           label="编号"
           width="120">
         </el-table-column>
         <el-table-column
-          fixed
           prop="value"
           label="值"
           width="150">
@@ -87,6 +87,11 @@
         <el-table-column
           prop="name"
           label="名称"
+          width="120">
+        </el-table-column>
+        <el-table-column
+          prop="remark"
+          label="描述"
           width="120">
         </el-table-column>
         <el-table-column

@@ -5,21 +5,30 @@ using Microsoft.Extensions.Configuration;
 
 namespace Core.Repository
 {
-    public class AppDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        private IConfigurationRoot _config;
-        public AppDbContext(DbContextOptions options, IConfigurationRoot config)
-      : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
         {
-            _config = config;
-        } 
+             
+        }
+
         public DbSet<DataDictionary> DataDictionary { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnConfiguring(optionsBuilder);
+            base.OnModelCreating(builder);
 
-            optionsBuilder.UseSqlServer(_config["Data:ConnectionString"]); 
+            builder.Entity<DataDictionary>(b =>
+            {
+                b.HasKey(m => m.ID);
+            });
+
+            // Customize the ASP.NET Identity model and override the defaults if needed.
+            // For example, you can rename the ASP.NET Identity table names and more.
+            // Add your customizations after calling base.OnModelCreating(builder);
         }
+
+
     }
 }
