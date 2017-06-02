@@ -1,0 +1,8 @@
+version: '2'
+
+services:
+  networkspace:
+    image: networkspace
+    build:
+      context: ./netWorkspace
+      dockerfile: Dockerfile

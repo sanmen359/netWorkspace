@@ -1,0 +1,30 @@
+ {
+  "zh-CN": [{
+          "groupName": "基本控件",
+          "path":"1",
+          "list": [
+            {
+              "path": "/home",
+              "title": "首页"
+            },
+            {
+              "path": "/dictionary",
+              "title": "数据字典"
+            }
+          ]
+        }],
+  "en-US": [{
+          "groupName": "Basic",
+          "path":"1",
+          "list": [
+            {
+              "path": "/home",
+              "title": "首页"
+            },
+            {
+              "path": "/dictionary",
+              "title": "数据字典"
+            }
+          ]
+        }]
+}
