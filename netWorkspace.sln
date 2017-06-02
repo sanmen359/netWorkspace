@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.EntityFrameworkCo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{96DDAA31-73E8-48CD-9D63-DE3568DB8564}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebUI", "WebUI", "{517B8BAD-B05F-4E4D-BFFA-71C7E08D15F8}"
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "WebAppUI", "WebAppUI.njsproj", "{3324D785-8FEE-4DA4-8CB1-0AA399F97019}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +35,10 @@ Global
 		{96DDAA31-73E8-48CD-9D63-DE3568DB8564}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96DDAA31-73E8-48CD-9D63-DE3568DB8564}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96DDAA31-73E8-48CD-9D63-DE3568DB8564}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3324D785-8FEE-4DA4-8CB1-0AA399F97019}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3324D785-8FEE-4DA4-8CB1-0AA399F97019}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3324D785-8FEE-4DA4-8CB1-0AA399F97019}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3324D785-8FEE-4DA4-8CB1-0AA399F97019}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

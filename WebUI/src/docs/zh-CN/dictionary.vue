@@ -164,7 +164,7 @@
       addChildNode(){
         if(this.currentTree.id){
           if(this.currentTree.type!='category'){
-         this.repError({body:"请选择要删除的目录"})
+            this.repError({body:"请选择要删除的目录"})
             return;
           }
           var input=prompt('请输入名称');
