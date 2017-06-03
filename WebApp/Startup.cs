@@ -14,6 +14,7 @@ using WebApp.Models;
 using WebApp.Services;
 using Newtonsoft.Json.Serialization;
 using Core.Repository;
+using Microsoft.AspNetCore.Http;
 
 namespace WebApp
 {
@@ -46,7 +47,7 @@ namespace WebApp
                 .AddDefaultTokenProviders();
 
             var mvcbuilder= services.AddMvc();
-            mvcbuilder.AddJsonOptions(m => m.SerializerSettings.ContractResolver = new DefaultContractResolver { NamingStrategy = new CamelCaseNamingStrategy () });
+            //mvcbuilder.AddJsonOptions(m => m.SerializerSettings.ContractResolver = new DefaultContractResolver { NamingStrategy = new CamelCaseNamingStrategy () });
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
@@ -76,7 +77,8 @@ namespace WebApp
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                //app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler(new ExceptionHandlerOptions { ExceptionHandlingPath= "/Home/Error", ExceptionHandler=ErrorRequest } );
             }
             app.UseCors(m=> {
                 m.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();//.AllowCredentials();
@@ -92,7 +94,7 @@ namespace WebApp
                 dbcontext.Database.MigrateAsync();
             }
 
-            //app.UseMiddleware<RequestCultureMiddleware>();
+            //app.UseMiddleware<RequestErrorMiddleware>();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -100,23 +102,36 @@ namespace WebApp
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+
+        public Task ErrorRequest(HttpContext context)
+        {
+            return Task.Factory.StartNew(delegate {
+                if (context.Response.StatusCode != 500)
+                {
+                    var log = context.RequestServices.GetService<ILogger>();
+                    log.LogInformation("Error");
+                }
+            });
+        }
     }
-    //public class RequestCultureMiddleware
-    //{
-    //    private readonly RequestDelegate _next;
+    public class RequestErrorMiddleware
+    {
+        private readonly RequestDelegate _next;
 
-    //    public RequestCultureMiddleware(RequestDelegate next)
-    //    {
-    //        _next = next;
-    //    }
+        public RequestErrorMiddleware(RequestDelegate next)
+        {
+            _next = next;
+        }
 
-    //    public Task Invoke(HttpContext context)
-    //    {
-
-    //        context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
-    //        context.Response.Headers.Add("Access-Control-Allow-Methods", "POST,GET,OPTIONS,PUT,DELETE");
-    //        context.Response.Headers.Add("Access-Control-Allow-Headers", "Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With");
-    //        return this._next(context);
-    //    }
-    //}
+        public Task Invoke(HttpContext context)
+        {
+            if (context.Response.StatusCode != 500)
+            {
+                //context.Response.Clear();
+                var log= context.RequestServices.GetService<ILogger>();
+                log.LogInformation("Error");
+            }
+            return this._next(context);
+        }
+    }
 }

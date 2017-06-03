@@ -271,21 +271,25 @@ namespace Microsoft.EntityFrameworkCore
         {
             // using a stub entity to mark for deletion
             var typeInfo = typeof(TEntity).GetTypeInfo();
-            var key = _dbContext.Model.FindEntityType(typeInfo.Name).FindPrimaryKey().Properties.FirstOrDefault();
-            var property = typeInfo.GetProperty(key?.Name);
-            if (property != null)
+            var entityType = _dbContext.Model.FindEntityType(typeInfo.Name);
+            if (entityType != null)
             {
-                var entity = Activator.CreateInstance<TEntity>();
-                property.SetValue(entity, id);
-                _dbContext.Entry(entity).State = EntityState.Deleted;
-            }
-            else
-            {
-                var entity = _dbSet.Find(id);
-                if (entity != null)
+                var key = entityType.FindPrimaryKey().Properties.FirstOrDefault();
+                var property = typeInfo.GetProperty(key?.Name);
+                if (property != null)
                 {
-                    Delete(entity);
+                    var entity = Activator.CreateInstance<TEntity>();
+                    property.SetValue(entity, id);
+                    _dbContext.Entry(entity).State = EntityState.Deleted;
+                    return;
                 }
+            }
+
+
+            var _entity = _dbSet.Find(id);
+            if (_entity != null)
+            {
+                Delete(_entity);
             }
         }
 

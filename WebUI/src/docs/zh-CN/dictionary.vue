@@ -98,7 +98,7 @@
         <el-table-column
           fixed="right"
           label="操作"
-          width="100">
+          width="140">
           <template scope="scope"> 
             <el-button
               size="small"
@@ -246,7 +246,10 @@
         }
       },
       handleDelete(index, row) {
-        console.log(index, row);
+          this.$http.delete("dictionary/delete/" + row.id).then(function (r) {
+              this.getCurrentItems();
+          }, this.repError);
+           
       },
       getCurrentItems(){
             this.$http.post("dictionary/GetItemByParentId",{pageIndex:0,pageSize:20,keyword:this.currentTree.id}).then(function(r){
@@ -272,7 +275,7 @@
           for(var r in this.form){
             currentModel[r]=this.form[r];
           }
-          this.$http.post('dictionary/PUT/'+this.form.id,this.form).then(function(r){
+          this.$http.put('dictionary/PUT/'+this.form.id,this.form).then(function(r){
             this.getCurrentItems();
           },this.repError);
         }

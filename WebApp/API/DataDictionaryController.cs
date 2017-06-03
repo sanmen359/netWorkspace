@@ -38,16 +38,17 @@ namespace Web.Api
         [HttpGet("{id}")]
         public Task UpdateTree(Guid Id, [FromBody]Tree tree)
         {
-            var modal = _Repository.Find(Id);
-            if (modal == null)
+            var model = _Repository.Find(Id);
+            if (model == null)
             {
                 throw new Exception(string.Format("{0} is not in database",Id));
             }
             else
             {
-                modal.Code = tree.code;
-                modal.Name = tree.label;
-                modal.Value = tree.label;
+                model.Code = tree.code;
+                model.Name = tree.label;
+                model.Value = tree.label;
+                Check(model);
                 return _Work.SaveChangesAsync();
             }
         }
@@ -60,8 +61,6 @@ namespace Web.Api
             _Work.SaveChanges();
             return newData.ID;
         }
-
-
 
         [HttpPost]
         public Task< IEnumerable<DataDictionary>>  GetItemByParentId([FromBody]QueryModel filter)
@@ -76,6 +75,24 @@ namespace Web.Api
         {
             _Repository.Delete(id);
             return _Work.SaveChangesAsync();
+        }
+        protected override void OnCreateBefore(DataDictionary data)
+        {
+            Check(data);
+        }
+        protected override void OnUpdateBefore(DataDictionary data)
+        {
+            
+            Check(data);
+        }
+    
+        protected void Check(DataDictionary data)
+        {
+            var exist = _Repository.Query(m => m.Code == data.Code && m.ID != data.ID).Count() > 0;
+            if (exist)
+            {
+                throw new Exception("已存在此CODE，不能保存");
+            }
         }
 
     }

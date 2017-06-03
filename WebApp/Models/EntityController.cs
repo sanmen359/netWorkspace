@@ -29,6 +29,7 @@ namespace Microsoft.AspNetCore.Mvc
         [HttpPost]
         public virtual ResponseResult<TEntity> PostAndReturn([FromBody]TEntity entity)
         {
+            OnCreateBefore(entity);
             _Work.GetRepository<TEntity>().Insert(entity);
             _Work.SaveChanges();
             return ReturnSuccess(entity);
@@ -42,6 +43,7 @@ namespace Microsoft.AspNetCore.Mvc
             {
                 throw new Exception("对象不能为空！");
             }
+            OnCreateBefore(entity);
             _Work.GetRepository<TEntity>().Insert(entity);
             return _Work.SaveChangesAsync();
         }
@@ -50,6 +52,8 @@ namespace Microsoft.AspNetCore.Mvc
         [HttpPut("{id}")]
         public virtual Task Put(TKey id, [FromBody]TEntity entity)
         {
+            OnUpdateBefore(entity);
+
             _Work.GetRepository<TEntity>().Update(entity);
             return _Work.SaveChangesAsync();
         }
@@ -60,6 +64,16 @@ namespace Microsoft.AspNetCore.Mvc
         {
             _Work.GetRepository<TEntity>().Delete(id);
             return _Work.SaveChangesAsync();
+        }
+
+        protected virtual void OnCreateBefore(TEntity data)
+        {
+            
+        }
+
+        protected virtual void OnUpdateBefore(TEntity data)
+        {
+
         }
 
         protected ResponseResult<T> ReturnSuccess<T>(T data, string msg = "success")

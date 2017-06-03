@@ -17,10 +17,16 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Content Include=".babelrc" />
+    <Content Include="Makefile" />
     <Content Include="package.json" />
     <Content Include="README.md" />
     <Compile Include="postcss.config.js" />
     <Compile Include="webpack.config.js" />
+    <Content Include="src\docs\en-US\dictionary.vue" />
+    <Content Include="src\docs\en-US\home.vue" />
+    <Content Include="src\docs\zh-CN\dictionary.vue" />
+    <Content Include="src\docs\zh-CN\home.vue" />
     <Content Include="src\index.html" />
     <Content Include="src\favicon.ico" />
     <Content Include="src\nav.config.json" />
@@ -28,10 +34,7 @@
     <Compile Include="src\route.config.js" />
     <Compile Include="src\vendor.js" />
     <Compile Include="src\vueUrl.js" />
-    <Content Include="src\i18n\component.json" />
-    <Content Include="src\i18n\page.json" />
     <Content Include="src\i18n\route.json" />
-    <Content Include="src\i18n\title.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src" />
