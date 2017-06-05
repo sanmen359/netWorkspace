@@ -15,6 +15,7 @@ using WebApp.Services;
 using Newtonsoft.Json.Serialization;
 using Core.Repository;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace WebApp
 {
@@ -47,6 +48,10 @@ namespace WebApp
                 .AddDefaultTokenProviders();
 
             var mvcbuilder= services.AddMvc();
+            mvcbuilder.AddMvcOptions(m =>
+            {
+                m.Filters.Add(new HandleErrorFilter());
+            });
             //mvcbuilder.AddJsonOptions(m => m.SerializerSettings.ContractResolver = new DefaultContractResolver { NamingStrategy = new CamelCaseNamingStrategy () });
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
@@ -55,20 +60,24 @@ namespace WebApp
             
             services.AddMemoryCache();
 
+            services.AddScoped<ILogger,SQLLogger>();
+            services.AddSingleton<IConfiguration>(Configuration);
             services.AddDistributedMemoryCache();
             services.AddDbContext<ApplicationDbContext>(options =>
                 options
                 .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), m => m.UseRowNumberForPaging())
 
                 ).AddUnitOfWork<ApplicationDbContext>();
+
             
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            //loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -77,8 +86,7 @@ namespace WebApp
             }
             else
             {
-                //app.UseExceptionHandler("/Home/Error");
-                app.UseExceptionHandler(new ExceptionHandlerOptions { ExceptionHandlingPath= "/Home/Error", ExceptionHandler=ErrorRequest } );
+                app.UseExceptionHandler("/Home/Error");
             }
             app.UseCors(m=> {
                 m.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();//.AllowCredentials();
@@ -95,25 +103,46 @@ namespace WebApp
             }
 
             //app.UseMiddleware<RequestErrorMiddleware>();
+            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
+                
+                
             });
         }
 
         public Task ErrorRequest(HttpContext context)
         {
             return Task.Factory.StartNew(delegate {
-                if (context.Response.StatusCode != 500)
+                if (context.Response.StatusCode == 500)
                 {
-                    var log = context.RequestServices.GetService<ILogger>();
-                    log.LogInformation("Error");
+                    //context.Response.Body
+                    using(System.IO.StreamReader sr=new System.IO.StreamReader(context.Response.Body))
+                    {
+                       var text= sr.ReadToEnd();
+                        var log = context.RequestServices.GetService<ILogger>();
+                        log.LogError(text);
+                    }
                 }
             });
         }
     }
+
+    public class HandleErrorFilter : ExceptionFilterAttribute
+    {
+       
+        public override void OnException(ExceptionContext context)
+        {
+            var log = context.HttpContext.RequestServices.GetService<ILogger>();
+            log.LogError(0, context.Exception,context.Exception.Message);
+            base.OnException(context);
+        }
+    }
+
     public class RequestErrorMiddleware
     {
         private readonly RequestDelegate _next;
@@ -125,13 +154,35 @@ namespace WebApp
 
         public Task Invoke(HttpContext context)
         {
-            if (context.Response.StatusCode != 500)
+            try
             {
-                //context.Response.Clear();
-                var log= context.RequestServices.GetService<ILogger>();
-                log.LogInformation("Error");
+                context.Response.OnCompleted(()=>
+                {
+                    return Task.Factory.StartNew(delegate {
+                        if (context.Response.StatusCode == 500)
+                        {
+                            using (System.IO.StreamReader sr = new System.IO.StreamReader(context.Request.Body))
+                            {
+                                var text = sr.ReadToEnd();
+                                var log = context.RequestServices.GetService<ILogger>();
+                                log.LogError(text);
+                            }
+                        }
+                    });
+                });
+
+                return this._next(context);
             }
-            return this._next(context);
+            catch (Exception ex)
+            {
+
+                return Task.Factory.StartNew(delegate {
+                        var log = context.RequestServices.GetService<ILogger>();
+                        log.LogError(0,ex,"请求错误");
+                });
+            }
         }
+
+        
     }
 }

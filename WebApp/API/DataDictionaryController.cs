@@ -26,10 +26,10 @@ namespace Web.Api
 
         public List<Tree> GetTree()
         {
-            var parents = _Repository.Query(m => m.ParentId.HasValue == false).Select(m=>new Tree { id=m.ID,label=m.Name,code=m.Code}).ToList();
+            var parents = _Repository.Query(m => m.ParentId.HasValue == false).Select(m=>new Tree { id=m.Id,label=m.Name,code=m.Code}).ToList();
             foreach(var item in parents)
             {
-                item.children= _Repository.Query(m => m.ParentId.HasValue && m.ParentId.Value==item.id).Select(m => new Tree { id = m.ID, label = m.Name, code = m.Code,type="type" }).ToList();
+                item.children= _Repository.Query(m => m.ParentId.HasValue && m.ParentId.Value==item.id).Select(m => new Tree { id = m.Id, label = m.Name, code = m.Code,type="type" }).ToList();
                 item.type = "category";
             }
             return parents;
@@ -56,10 +56,10 @@ namespace Web.Api
         [HttpPost("{id?}")]
         public Guid AddTree(Guid? id, [FromBody]Tree tree)
         {
-            var newData = new DataDictionary { Code = tree.code, Name = tree.label, Value = tree.label, ParentId = id, ID = Guid.NewGuid() };
+            var newData = new DataDictionary { Code = tree.code, Name = tree.label, Value = tree.label, ParentId = id, Id = Guid.NewGuid() };
             _Repository.Insert(newData);
             _Work.SaveChanges();
-            return newData.ID;
+            return newData.Id;
         }
 
         [HttpPost]
@@ -85,10 +85,10 @@ namespace Web.Api
             
             Check(data);
         }
-    
+
         protected void Check(DataDictionary data)
         {
-            var exist = _Repository.Query(m => m.Code == data.Code && m.ID != data.ID).Count() > 0;
+            var exist = _Repository.Query(m => m.Code == data.Code && m.Id != data.Id).Count() > 0;
             if (exist)
             {
                 throw new Exception("已存在此CODE，不能保存");

@@ -190,6 +190,28 @@ namespace WebApp.Data.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+            //
+
+            migrationBuilder.CreateTable(
+                name: "CM_ExceptionLog",
+
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Time = table.Column<DateTime>(nullable: false),
+                    //Thread = table.Column<int>(nullable: false),
+                    Level = table.Column<string>(nullable: false),
+
+                    Logger = table.Column<string>(nullable: false),
+                    Message = table.Column<string>(nullable: false, unicode: true, maxLength: 4000),
+                    Exception = table.Column<string>(nullable: false, unicode: true, maxLength: 4000)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CM_ExceptionLog", x => x.Id);
+                });
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

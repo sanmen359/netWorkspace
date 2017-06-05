@@ -15,14 +15,18 @@ namespace Core.Repository
 
         public DbSet<DataDictionary> DataDictionary { get; set; }
 
+        public DbSet<ExceptionLog> ExceptionLog { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
             builder.Entity<DataDictionary>(b =>
             {
-                b.HasKey(m => m.ID);
+                b.HasKey(m => m.Id);
             });
+
+            
 
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.

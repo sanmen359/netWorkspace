@@ -6,6 +6,6 @@ namespace Core.Modes
 {
     public interface IEnitity<TKey>
     {
-        TKey ID { get; set; }
+        TKey Id { get; set; }
     }
 }

@@ -211,6 +211,37 @@ namespace WebApp.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
+
+            modelBuilder.Entity("Core.Modes.ExceptionLog", b =>
+            {
+                b.Property<int>("Id");
+
+                b.Property<DateTime>("Time").IsRequired();
+
+                b.Property<int>("Thread").IsRequired();
+
+
+                b.Property<string>("Level")
+                    .HasAnnotation("MaxLength", 256).IsRequired();
+
+
+                b.Property<string>("Level")
+                    .HasAnnotation("MaxLength", 256).IsRequired();
+
+
+                b.Property<string>("Message")
+                    .HasAnnotation("MaxLength", 4000).IsRequired();
+
+
+                b.Property<string>("Exception")
+                    .HasAnnotation("MaxLength", 4000);
+
+
+                b.HasKey("Id");
+                
+
+                b.ToTable("CM_ExceptionLog");
+            });
         }
     }
 }
