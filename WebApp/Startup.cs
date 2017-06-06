@@ -8,14 +8,14 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using WebApp.Data;
+using Microsoft.Extensions.Logging; 
 using WebApp.Models;
 using WebApp.Services;
 using Newtonsoft.Json.Serialization;
 using Core.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Web.Api;
 
 namespace WebApp
 {
@@ -137,9 +137,23 @@ namespace WebApp
        
         public override void OnException(ExceptionContext context)
         {
+            string msg = context.Exception.Message; 
             var log = context.HttpContext.RequestServices.GetService<ILogger>();
-            log.LogError(0, context.Exception,context.Exception.Message);
-            base.OnException(context);
+            log.LogError(0, context.Exception, msg);
+
+            context.HttpContext.Response.Clear();
+            context.HttpContext.Response.StatusCode = 500;
+            //var Data = new ResponseResult<string> { MSG = msg, Data = context.Exception.StackTrace };
+            //var json= Newtonsoft.Json.JsonConvert.SerializeObject(Data);
+            //var bytes = System.Text.Encoding.UTF8.GetBytes(json);
+            //context.HttpContext.Response.Body.Write(bytes, 0, bytes.Length);
+            //context.HttpContext.Response.ContentType = "application/json";
+
+            //base.OnException(context);
+
+            var bytes = System.Text.Encoding.UTF8.GetBytes(msg);
+            context.HttpContext.Response.Body.Write(bytes, 0, bytes.Length);
+
         }
     }
 

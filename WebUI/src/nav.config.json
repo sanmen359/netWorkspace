@@ -1,20 +1,24 @@
  {
   "zh-CN": [{
-          "groupName": "基本控件",
+          "groupName": "系统管理",
           "path":"1",
-          "list": [
-            {
-              "path": "/home",
-              "title": "首页"
-            },
-            {
-              "path": "/dictionary",
-              "title": "数据字典"
-            }
-          ]
+    "list": [
+      {
+        "path": "/home",
+        "title": "首页"
+      },
+      {
+        "path": "/dictionary",
+        "title": "数据字典"
+      },
+      {
+        "path": "/log",
+        "title": "异常日志"
+      }
+    ]
         }],
   "en-US": [{
-          "groupName": "Basic",
+          "groupName": "System Management",
           "path":"1",
           "list": [
             {

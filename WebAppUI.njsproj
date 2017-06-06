@@ -23,8 +23,12 @@
     <Content Include="README.md" />
     <Compile Include="postcss.config.js" />
     <Compile Include="webpack.config.js" />
+    <Content Include="src\components\kwSearch.vue">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\docs\en-US\dictionary.vue" />
     <Content Include="src\docs\en-US\home.vue" />
+    <Content Include="src\docs\zh-CN\log.vue" />
     <Content Include="src\docs\zh-CN\dictionary.vue" />
     <Content Include="src\docs\zh-CN\home.vue" />
     <Content Include="src\index.html" />
@@ -42,6 +46,7 @@
     <Folder Include="src\docs\en-US" />
     <Folder Include="src\docs\zh-CN" />
     <Folder Include="src\i18n" />
+    <Folder Include="src\components\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <!--Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them.-->

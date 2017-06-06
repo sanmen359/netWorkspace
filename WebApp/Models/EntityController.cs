@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Web.Api;
 
 namespace Microsoft.AspNetCore.Mvc
 {
@@ -88,21 +89,5 @@ namespace Microsoft.AspNetCore.Mvc
         }
     }
 
-    public class ResponseResult<T>
-    {
-        public T Data { get; set; }
-
-        public string MSG { get; set; }
-
-        public bool Success { get; set; }
-    }
-
-    public class QueryModel
-    {
-        public string Keyword { get; set; }
-
-        public int PageIndex { get; set; }
-
-        public int PageSize { get; set; }
-    }
+    
 }

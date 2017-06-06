@@ -10,7 +10,7 @@ namespace WebApp.Models
 {
     public class SQLLogger : ILogger, IDisposable
     {
-        private const string InsertSql = "INSERT INTO CM_ExceptionLog ([Time],[Level],[Logger],[Message],[Exception]) VALUES (@log_date, @log_level, @logger, @message, @exception)";
+        private const string InsertSql = "INSERT INTO CM_Log ([Time],[Level],[Logger],[Message],[Exception]) VALUES (@log_date, @log_level, @logger, @message, @exception)";
         private System.Data.SqlClient.SqlConnection Connection;
         private string _Name;
         public string Name { get { return _Name; } }

@@ -6,10 +6,13 @@
 
   <ItemGroup>
     <Compile Remove="Identity\**" />
+    <Compile Remove="Migrations\**" />
     <Compile Remove="UnitOfWork\**" />
     <EmbeddedResource Remove="Identity\**" />
+    <EmbeddedResource Remove="Migrations\**" />
     <EmbeddedResource Remove="UnitOfWork\**" />
     <None Remove="Identity\**" />
+    <None Remove="Migrations\**" />
     <None Remove="UnitOfWork\**" />
   </ItemGroup>
 

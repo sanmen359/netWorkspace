@@ -5,9 +5,14 @@ import routes from './route.config';
 import ElementUI from 'element-ui';
 import resource from 'vue-resource';
 import 'element-ui/lib/theme-default/index.css';
+
 Vue.use(ElementUI);
 Vue.use(VueRouter);
 Vue.use(resource);
+Vue.component(
+    'kw-search',
+    () => import('./components/kwSearch.vue')
+) 
 
 const router = new VueRouter({
     mode: 'hash',

@@ -193,7 +193,7 @@ namespace WebApp.Data.Migrations
             //
 
             migrationBuilder.CreateTable(
-                name: "CM_ExceptionLog",
+                name: "CM_Log",
 
                 columns: table => new
                 {

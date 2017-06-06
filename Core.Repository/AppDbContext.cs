@@ -15,7 +15,7 @@ namespace Core.Repository
 
         public DbSet<DataDictionary> DataDictionary { get; set; }
 
-        public DbSet<ExceptionLog> ExceptionLog { get; set; }
+        public DbSet<Log> Logs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -25,7 +25,10 @@ namespace Core.Repository
             {
                 b.HasKey(m => m.Id);
             });
-
+            builder.Entity<Log>(b =>
+            {
+                b.ToTable("CM_Log").HasKey(m => m.Id);
+            });
             
 
             // Customize the ASP.NET Identity model and override the defaults if needed.

@@ -17,7 +17,7 @@ namespace Web.Api
         {
         }
 
-        // GET: api/values
+        // GET: api/Dictionary/Query
         [HttpGet]
         public IEnumerable<DataDictionary> Query()
         { 
@@ -70,7 +70,7 @@ namespace Web.Api
                 .ToPagedAsync( filter.PageIndex,filter.PageSize);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public Task DeleteTree(Guid id)
         {
             _Repository.Delete(id);
@@ -91,7 +91,7 @@ namespace Web.Api
             var exist = _Repository.Query(m => m.Code == data.Code && m.Id != data.Id).Count() > 0;
             if (exist)
             {
-                throw new Exception("已存在此CODE，不能保存");
+                throw new Exception("已存在此CODE，不能保存.");
             }
         }
 

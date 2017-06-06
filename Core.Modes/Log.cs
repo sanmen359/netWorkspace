@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Core.Modes
 {
-    public class ExceptionLog:IEnitity<int>
+    public class Log:IEnitity<int>
     {
         public int Id { get; set;}
 
