@@ -63,11 +63,11 @@ namespace Web.Api
         }
 
         [HttpPost]
-        public Task< IEnumerable<DataDictionary>>  GetItemByParentId([FromBody]QueryModel filter)
+        public IEnumerable<DataDictionary> GetItemByParentId([FromBody]QueryModel filter)
         {
             var parentID = Guid.Parse(filter.Keyword);
             return _Repository.Query(m => m.ParentId == parentID).OrderBy(m=>m.Order)
-                .ToPagedAsync( filter.PageIndex,filter.PageSize);
+                .ToPaged( filter.PageIndex,filter.PageSize);
         }
 
         [HttpDelete("{id}")]

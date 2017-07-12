@@ -1,17 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.12
+VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Modes", "Core.Modes\Core.Modes.csproj", "{1207943B-FF4C-4A5B-B604-5ED3235D1785}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Modes", "Core.Modes\Core.Modes.csproj", "{1207943B-FF4C-4A5B-B604-5ED3235D1785}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Repository", "Core.Repository\Core.Repository.csproj", "{B96EEB84-2B9B-4388-9DCE-D1251A867CC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.DbContext", "Core.Repository\Core.DbContext.csproj", "{B96EEB84-2B9B-4388-9DCE-D1251A867CC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.EntityFrameworkCore.UnitOfWork", "Microsoft.EntityFrameworkCore.UnitOfWork\Microsoft.EntityFrameworkCore.UnitOfWork.csproj", "{95E5BC84-52EF-4453-91AB-338C1A665667}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.EntityFrameworkCore.UnitOfWork", "Microsoft.EntityFrameworkCore.UnitOfWork\Microsoft.EntityFrameworkCore.UnitOfWork.csproj", "{95E5BC84-52EF-4453-91AB-338C1A665667}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{96DDAA31-73E8-48CD-9D63-DE3568DB8564}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "WebApp\WebApp.csproj", "{96DDAA31-73E8-48CD-9D63-DE3568DB8564}"
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "WebAppUI", "WebAppUI.njsproj", "{3324D785-8FEE-4DA4-8CB1-0AA399F97019}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Redis", "Core.Redis\Core.Redis.csproj", "{5046CFAD-4C33-4A4E-99A5-97678C366B3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IWork", "IUnitOfWork\IWork.csproj", "{4BF303E1-AAFA-488A-BB5A-E13D8512ECA4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,14 @@ Global
 		{3324D785-8FEE-4DA4-8CB1-0AA399F97019}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3324D785-8FEE-4DA4-8CB1-0AA399F97019}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3324D785-8FEE-4DA4-8CB1-0AA399F97019}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5046CFAD-4C33-4A4E-99A5-97678C366B3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5046CFAD-4C33-4A4E-99A5-97678C366B3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5046CFAD-4C33-4A4E-99A5-97678C366B3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5046CFAD-4C33-4A4E-99A5-97678C366B3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BF303E1-AAFA-488A-BB5A-E13D8512ECA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BF303E1-AAFA-488A-BB5A-E13D8512ECA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BF303E1-AAFA-488A-BB5A-E13D8512ECA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BF303E1-AAFA-488A-BB5A-E13D8512ECA4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

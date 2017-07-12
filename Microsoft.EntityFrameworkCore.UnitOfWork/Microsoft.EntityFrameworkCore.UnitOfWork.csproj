@@ -5,9 +5,29 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="PagedList\**" />
+    <EmbeddedResource Remove="PagedList\**" />
+    <None Remove="PagedList\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="IRepository.cs" />
+    <Compile Remove="IRepositoryFactory.cs" />
+    <Compile Remove="IUnitOfWork.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="1.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.AutoHistory" Version="1.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="1.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IUnitOfWork\IWork.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="PagedList\" />
   </ItemGroup>
 
 </Project>
